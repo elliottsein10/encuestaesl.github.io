@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Resultado{% endblock %}
+
+{% block content %}
+<h1>{{ question }}</h1>
+
+<!-- Agregar gráfica de resultados -->
+<canvas id="myChart" width="400" height="400"></canvas>
+<script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [{% for c in question.choice_set.all %}'{{ c.choice_text }}',{% endfor %}],
+            datasets: [{
+                label: 'Votos',
+                data: [{% for c in question.choice_set.all %}{{ c.votes }},{% endfor %}],
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
+<hr>
+<a href="{% url 'polls:home' %}">Inicio</a>
+{% endblock %}

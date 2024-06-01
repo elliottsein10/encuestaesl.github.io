@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="home-container">
+    <div class="title-box">
+        <h1 class="title">Bienvenido a las Encuestas 🎮</h1>
+    </div>
+    <h2>Responde alguna de las siguientes:</h2>
+    <ul class="game-list">
+        {% for q in questions %}
+        <li class="game-item">
+            <a href="{% url 'polls:vote' q.id %}">
+                <div class="overlay">
+                    <div class="text">{{ q.question_text }}</div>
+                </div>
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
